@@ -4,4 +4,4 @@ if you bought this then you where SCAMMED this is a FREE mod that was made by TH
 This was made 101% with ai! 
 40% claude
 40% gemini
-21% big pickel
+21% big pickle
