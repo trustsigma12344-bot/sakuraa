@@ -1,0 +1,7 @@
+C:\Users\lerou\Downloads\Sakuraa src\sakuraa\bin\Debug\SakuraaCastingMod.dll
+C:\Users\lerou\Downloads\Sakuraa src\sakuraa\bin\Debug\SakuraaCastingMod.pdb
+C:\Users\lerou\Downloads\Sakuraa src\sakuraa\obj\Debug\sakuraa.csproj.AssemblyReference.cache
+C:\Users\lerou\Downloads\Sakuraa src\sakuraa\obj\Debug\sakuraa.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lerou\Downloads\Sakuraa src\sakuraa\obj\Debug\sakuraa.csproj.CoreCompileInputs.cache
+C:\Users\lerou\Downloads\Sakuraa src\sakuraa\obj\Debug\SakuraaCastingMod.dll
+C:\Users\lerou\Downloads\Sakuraa src\sakuraa\obj\Debug\SakuraaCastingMod.pdb
