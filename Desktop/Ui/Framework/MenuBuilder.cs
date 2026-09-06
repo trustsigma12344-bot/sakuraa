@@ -378,7 +378,7 @@ public class MenuBuilder
 
   private void HandleInput(Event evt, Rect headerRect)
   {
-    if ((evt.type != null || !headerRect.Contains(evt.mousePosition) ? 0 : (evt.button == 1 ? 1 : 0)) != 0)
+    if (((int) evt.type != 0 || !headerRect.Contains(evt.mousePosition) ? 0 : (evt.button == 1 ? 1 : 0)) != 0)
     {
       this.IsMinimized = !this.IsMinimized;
       Sounds.PlayCasterClick(Sounds.subtleClickSfx);
@@ -393,6 +393,7 @@ public class MenuBuilder
           if (!headerRect.Contains(evt.mousePosition) || evt.button != 0)
             break;
           this._isDragging = true;
+          InputDiag.NoteHeaderDrag(this._title);
           this._dragOffset = (evt.mousePosition - new Vector2(this.MenuRect.x, this.MenuRect.y));
           evt.Use();
           break;
@@ -458,6 +459,7 @@ public class MenuBuilder
     try
     {
       Event current = Event.current;
+      InputDiag.NoteMenu(this._title, this.MenuRect, current);
       if (current.type == (EventType) 7)
       {
         Color color = GUI.color;
@@ -522,7 +524,7 @@ public class MenuBuilder
             this._scrollbarAlpha = 1f;
             current.Use();
           }
-          if ((current.type != null ? 0 : (rect4.Contains(current.mousePosition) ? 1 : 0)) != 0)
+          if (((int) current.type != 0 ? 0 : (rect4.Contains(current.mousePosition) ? 1 : 0)) != 0)
             this._scrollVel = 0.0f;
           if (current.type == (EventType) 7)
           {
@@ -540,10 +542,17 @@ public class MenuBuilder
           try
           {
             float num10 = 0.0f;
+            float viewTop = this._scrollPosition.y;
+            float viewBottom = viewTop + rect4.height;
             for (int index = 0; index < this._visibleItemsCache.Count; ++index)
             {
-              MenuBuilder.DrawItemSafe(this._visibleItemsCache[index], new Rect(0.0f, num10, width, this._visibleHeights[index]));
-              num10 += this._visibleHeights[index] + verticalSpacing;
+              float itemHeight = this._visibleHeights[index];
+              // Items scrolled out of view are clipped away visually but were still being
+              // hit-tested, so an invisible item could swallow the click meant for whatever
+              // is actually on screen at that spot. Don't draw them at all.
+              if (num10 + itemHeight >= viewTop && num10 <= viewBottom)
+                MenuBuilder.DrawItemSafe(this._visibleItemsCache[index], new Rect(0.0f, num10, width, itemHeight));
+              num10 += itemHeight + verticalSpacing;
             }
           }
           finally

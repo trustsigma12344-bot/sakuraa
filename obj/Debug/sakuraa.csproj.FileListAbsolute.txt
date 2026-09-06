@@ -5,3 +5,10 @@ C:\Users\lerou\Downloads\Sakuraa src\sakuraa\obj\Debug\sakuraa.GeneratedMSBuildE
 C:\Users\lerou\Downloads\Sakuraa src\sakuraa\obj\Debug\sakuraa.csproj.CoreCompileInputs.cache
 C:\Users\lerou\Downloads\Sakuraa src\sakuraa\obj\Debug\SakuraaCastingMod.dll
 C:\Users\lerou\Downloads\Sakuraa src\sakuraa\obj\Debug\SakuraaCastingMod.pdb
+C:\ai-shit\sakuraa-audit\bin\Debug\SakuraaCastingMod.dll
+C:\ai-shit\sakuraa-audit\bin\Debug\SakuraaCastingMod.pdb
+C:\ai-shit\sakuraa-audit\obj\Debug\sakuraa.csproj.AssemblyReference.cache
+C:\ai-shit\sakuraa-audit\obj\Debug\sakuraa.GeneratedMSBuildEditorConfig.editorconfig
+C:\ai-shit\sakuraa-audit\obj\Debug\sakuraa.csproj.CoreCompileInputs.cache
+C:\ai-shit\sakuraa-audit\obj\Debug\SakuraaCastingMod.dll
+C:\ai-shit\sakuraa-audit\obj\Debug\SakuraaCastingMod.pdb

@@ -7,7 +7,6 @@ namespace SakuraaCastingMod.Desktop.Ui.Framework;
 public static class ControlChrome
 {
   private static AnimState _armed;
-
   public static ChromeResult Draw(
     Rect rect,
     AnimState anim,
@@ -21,15 +20,18 @@ public static class ControlChrome
     bool flag = false;
     if (interactable & enabled)
     {
-      if (((current.type != null ? 0 : (current.button == 0 ? 1 : 0)) & (hovered ? 1 : 0)) != 0)
+      if ((((int) current.type != 0 ? 0 : (current.button == 0 ? 1 : 0)) & (hovered ? 1 : 0)) != 0)
       {
         ControlChrome._armed = anim;
+        InputDiag.NoteArm(rect);
         current.Use();
       }
       else if ((current.type != (EventType) 1 || current.button != 0 ? 0 : (ControlChrome._armed == anim ? 1 : 0)) != 0)
       {
         if (hovered)
           flag = true;
+        if (flag)
+          InputDiag.NoteClick(rect);
         ControlChrome._armed = (AnimState) null;
         current.Use();
       }

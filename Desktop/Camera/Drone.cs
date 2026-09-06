@@ -61,7 +61,7 @@ public static class Drone
 
   private static float ApplyExpo(float x, float expo) => Mathf.Lerp(x, x * Mathf.Abs(x), expo);
 
-  private static void CheckLockedCursor()
+  internal static void CheckLockedCursor()
   {
     if (!MainMenus.ShowMainMenu)
     {
@@ -151,6 +151,10 @@ public static class Drone
 
   public static void UpdateDroneMode()
   {
+    // Run this in every branch, not just the drone-is-flying one. Despawning the drone
+    // (or never spawning it) used to skip the only call that gives the cursor back, so a
+    // captured cursor stayed captured and nothing in any menu could be clicked.
+    Drone.CheckLockedCursor();
     UnityEngine.Camera camera = Plugin.Ins.camera;
     bool flag1 = false;
     if ((XRSettings.isDeviceActive ? 0 : (Gamepad.current != null ? 1 : 0)) != 0)
@@ -164,8 +168,8 @@ public static class Drone
     {
       Plugin.Ins.ResetCameraObject();
       camera.fieldOfView = Drone.DroneFov;
-      Cursor.lockState = (CursorLockMode) 1;
-      Cursor.visible = false;
+      // Spawning must not grab the cursor out from under an open menu.
+      Drone.CheckLockedCursor();
       Drone.StartDroneController();
     }
     else if (!Drone.DroneStarted)

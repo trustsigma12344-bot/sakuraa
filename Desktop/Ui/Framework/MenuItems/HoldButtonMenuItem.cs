@@ -22,7 +22,7 @@ public class HoldButtonMenuItem : MenuItem
   {
     Event current = Event.current;
     bool flag1 = rect.Contains(current.mousePosition);
-    if ((((current.type != null ? 0 : (current.button == 0 ? 1 : 0)) & (flag1 ? 1 : 0)) == 0 ? 0 : (this.Enabled ? 1 : 0)) != 0)
+    if (((((int) current.type != 0 ? 0 : (current.button == 0 ? 1 : 0)) & (flag1 ? 1 : 0)) == 0 ? 0 : (this.Enabled ? 1 : 0)) != 0)
     {
       this._holding = true;
       this._elapsed = 0.0f;

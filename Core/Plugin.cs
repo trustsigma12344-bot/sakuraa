@@ -868,7 +868,7 @@ public class Plugin : MonoBehaviour
   {
     if ((this.modDisabled ? 1 : (!this._initialized ? 1 : 0)) != 0)
       return;
-    GorillaDataHandler.UpdateGorillaData();
+    GorillaDataHandler.SafeUpdate();
     Networking.InRoom = Plugin.ReplayCompatibilityMode || NetworkSystem.Instance.InRoom;
     Networking.ScanForManagerUpdate();
     if (this._lastFrameMode != this.currentCameraMode)
@@ -902,6 +902,14 @@ public class Plugin : MonoBehaviour
         bool flag;
         Cursor.lockState = (flag = !MainMenus.ShowMainMenu && Mouse.current != null && Mouse.current.rightButton.isPressed) ? (CursorLockMode) 1 : (CursorLockMode) 0;
         Cursor.visible = !flag;
+      }
+      // Final say: if the desktop menu is open the pointer must be usable. Every camera
+      // mode already intends this, but each one manages the cursor on its own and any
+      // missed path leaves it captured, which makes the whole GUI unclickable.
+      if (MainMenus.ShowMainMenu && Cursor.lockState != (CursorLockMode) 0)
+      {
+        Cursor.lockState = (CursorLockMode) 0;
+        Cursor.visible = true;
       }
     }
     RewindViewer.CaptureFrame();
@@ -964,6 +972,7 @@ public class Plugin : MonoBehaviour
 
   private void OnGUI()
   {
+    SakuraaCastingMod.Desktop.Ui.Framework.InputDiag.NoteGlobal(Event.current);
     Notification.DrawNotifier();
     if ((this.modDisabled ? 1 : (!this._initialized ? 1 : 0)) != 0 || !FeatureToggles.ShowDesktopCasting)
       return;

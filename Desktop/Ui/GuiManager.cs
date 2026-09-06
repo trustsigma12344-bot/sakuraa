@@ -73,7 +73,7 @@ public static class GuiManager
   {
     Event current = Event.current;
     GUI.Box(menuDragBoxRect, "", GUI.skin.box);
-    if (menuDragBoxRect.Contains(current.mousePosition) && (current.type != null ? 0 : (current.button == 0 ? 1 : 0)) != 0)
+    if (menuDragBoxRect.Contains(current.mousePosition) && ((int) current.type != 0 ? 0 : (current.button == 0 ? 1 : 0)) != 0)
     {
       mI.IsDraggingMenu = true;
       mI.MenuDragOffset = (current.mousePosition - mI.MenuPosition);

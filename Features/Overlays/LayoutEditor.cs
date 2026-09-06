@@ -442,7 +442,7 @@ public static class LayoutEditor
         LayoutEditor.DrawHandleLabel(calibratedRect, handle.Name, handle.HandleColor);
         if (handle.CanScale)
           LayoutEditor.DrawScaleCornerHandles(calibratedRect, handle.HandleColor);
-        if ((evt.type != null ? 0 : (evt.button == 0 ? 1 : 0)) != 0)
+        if (((int) evt.type != 0 ? 0 : (evt.button == 0 ? 1 : 0)) != 0)
         {
           if (handle.CanScale)
           {

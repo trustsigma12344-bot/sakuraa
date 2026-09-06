@@ -693,7 +693,7 @@ public static class UtilMenuViewer
   private static void HandleDrag(Rect headerRect)
   {
     Event current = Event.current;
-    if ((current.type != null || !headerRect.Contains(current.mousePosition) ? 0 : (current.button == 0 ? 1 : 0)) != 0)
+    if (((int) current.type != 0 || !headerRect.Contains(current.mousePosition) ? 0 : (current.button == 0 ? 1 : 0)) != 0)
     {
       UtilMenuViewer._isDragging = true;
       UtilMenuViewer._dragOffset = (current.mousePosition - new Vector2(UtilMenuViewer.PosX, UtilMenuViewer.PosY));

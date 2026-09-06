@@ -335,7 +335,7 @@ label_6:
         Rect r;
         // ISSUE: explicit constructor call
         r = new Rect(rect.x + (float) index * (num1 + 5f), rect.y + (float) (((double) rect.height - (double) num2) * 0.5), num1, num2);
-        if ((current.type != null || current.button != 0 ? 0 : (r.Contains(current.mousePosition) ? 1 : 0)) != 0)
+        if (((int) current.type != 0 || current.button != 0 ? 0 : (r.Contains(current.mousePosition) ? 1 : 0)) != 0)
         {
           ThemeEditorMenu.SelectSlot(slot.Key);
           Sounds.PlayCasterClick(Sounds.subtleClickSfx);
@@ -407,7 +407,7 @@ label_6:
 
     private static void HandleInput(Event e, Rect sv, Rect hue)
     {
-      if ((e.type != null ? 0 : (e.button == 0 ? 1 : 0)) == 0)
+      if (((int) e.type != 0 ? 0 : (e.button == 0 ? 1 : 0)) == 0)
       {
         if ((e.type != (EventType) 3 ? 0 : (ThemeEditorMenu._dragging != 0 ? 1 : 0)) == 0)
         {

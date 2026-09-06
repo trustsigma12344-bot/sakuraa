@@ -13,6 +13,29 @@ public static class GorillaDataHandler
   private static readonly HashSet<string> ActiveIds = new HashSet<string>();
   private static readonly List<string> IdsToRemove = new List<string>();
   private static readonly HashSet<GorillaData> InfectedSet = new HashSet<GorillaData>();
+  private static float _lastFailureLogTime = -999f;
+
+  /// <summary>
+  /// Plugin.Update() calls this first, and everything after it (keybinds, camera modes,
+  /// minimap, scoreboard, notifications) is skipped if it throws. Never let a single bad
+  /// frame take the rest of the mod down with it; log at most once every 5 seconds so a
+  /// recurring fault can't spam a stack trace to Player.log every frame.
+  /// </summary>
+  public static void SafeUpdate()
+  {
+    try
+    {
+      GorillaDataHandler.UpdateGorillaData();
+    }
+    catch (System.Exception ex)
+    {
+      if ((double) (Time.realtimeSinceStartup - GorillaDataHandler._lastFailureLogTime) > 5.0)
+      {
+        GorillaDataHandler._lastFailureLogTime = Time.realtimeSinceStartup;
+        UnityEngine.Debug.LogWarning((object) ("[Sakuraa] UpdateGorillaData failed, skipping this frame: " + ex.Message));
+      }
+    }
+  }
 
   public static void UpdateGorillaData()
   {
@@ -23,6 +46,8 @@ public static class GorillaDataHandler
     {
       foreach (GorillaRigExposed exposedRig in ReplayModExposer.exposedRigs)
       {
+        if (string.IsNullOrEmpty(exposedRig.ID))
+          continue;
         if (exposedRig.isRigActive)
         {
           GorillaData gorillaData;
@@ -69,7 +94,9 @@ public static class GorillaDataHandler
       }
       foreach (VRRig vrrig in PlayerTranslator.vrrigs)
       {
-        if (vrrig.OwningNetPlayer != null)
+        // A rig can exist before Photon has assigned its owner a UserId (mid-join),
+        // and a null key throws ArgumentNullException out of Update() every frame.
+        if (vrrig != null && vrrig.OwningNetPlayer != null && !string.IsNullOrEmpty(vrrig.OwningNetPlayer.UserId))
         {
           string userId = vrrig.OwningNetPlayer.UserId;
           GorillaDataHandler.ActiveIds.Add(userId);
@@ -124,7 +151,7 @@ public static class GorillaDataHandler
     else
     {
       VRRig offlineVrRig = GorillaTagger.Instance.offlineVRRig;
-      if ((!((UnityEngine.Object) offlineVrRig != (UnityEngine.Object) null) ? 0 : (NetworkSystem.Instance.LocalPlayer != null ? 1 : 0)) != 0)
+      if (offlineVrRig != null && NetworkSystem.Instance.LocalPlayer != null && !string.IsNullOrEmpty(NetworkSystem.Instance.LocalPlayer.UserId))
       {
         string userId = NetworkSystem.Instance.LocalPlayer.UserId;
         string nickName = NetworkSystem.Instance.LocalPlayer.NickName;

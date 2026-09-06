@@ -43,7 +43,7 @@ public class SliderMenuItem : MenuItem
     bool flag = false;
     if (this.Enabled)
     {
-      if (((current.type != null ? 0 : (current.button == 0 ? 1 : 0)) & (hovered ? 1 : 0)) != 0)
+      if ((((int) current.type != 0 ? 0 : (current.button == 0 ? 1 : 0)) & (hovered ? 1 : 0)) != 0)
       {
         this._dragging = true;
         MenuBuilder.ActiveDragOwner = (object) this;
